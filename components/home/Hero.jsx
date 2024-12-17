@@ -1,72 +1,17 @@
 "use client"
 
 import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command"
-import { Search, Briefcase, MapPin } from "lucide-react"
 import { useRouter } from 'next/navigation'
-
-
-const jobTitles = [
-  "Software Engineer",
-  "Product Manager",
-  "Data Scientist",
-  "UX Designer",
-  "Marketing Manager",
-]
-
-const locations = [
-  "New York, NY",
-  "San Francisco, CA",
-  "London, UK",
-  "Berlin, Germany",
-  "Tokyo, Japan",
-]
-
-export const jobs = [
-  {
-    id: '1',
-    title: 'Frontend Developer',
-    description: 'We are looking for a skilled Frontend Developer to join our team...'
-  },
-  {
-    id: '2',
-    title: 'Backend Engineer',
-    description: 'Seeking an experienced Backend Engineer to build scalable server-side applications...'
-  },
-  {
-    id: '3',
-    title: 'UX Designer',
-    description: 'Join our design team to create intuitive and engaging user experiences...'
-  },
-  {
-    id: '4',
-    title: 'Data Scientist',
-    description: 'We need a Data Scientist to analyze complex datasets and derive insights...'
-  },
-  {
-    id: '5',
-    title: 'DevOps Engineer',
-    description: 'Looking for a DevOps Engineer to streamline our development and deployment processes...'
-  }
-];
-
 
 const Hero = () => {
 
-  const [searchQuery, setSearchQuery] = useState('')
-  const [recentSearches, setRecentSearches] = useState([])
+  const [query, setQuery] = useState('')
   const router = useRouter()
 
-  // const handleSearch = (e) => {
-  //   e.preventDefault()
-  //   if (searchQuery.trim()) {
-  //     setRecentSearches(prev => [searchQuery, ...prev.slice(0, 4)])
-  //     router.push(`/search?q=${encodeURIComponent(searchQuery)}`)
-  //   }
-  // }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    router.push(`/search?q=${encodeURIComponent(query)}`)
+  }
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
@@ -81,43 +26,24 @@ const Hero = () => {
             </p>
           </div>
           <div className="w-full max-w-2xl space-y-2">
-            {/* <form onSubmit={handleSearch} className="flex flex-col space-y-2"> */}
-            <form className="flex flex-col space-y-2">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Input
-                    className="flex-1"
-                    placeholder="Search jobs or locations..."
-                    name="query"
-                    // value={searchQuery}
-                    // onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </PopoverTrigger>
-                <PopoverContent className="w-[300px] p-0" align="start">
-                  <Command>
-                    <CommandInput placeholder="Search jobs or locations..." />
-                    <CommandEmpty>No results found.</CommandEmpty>
-                    <CommandGroup heading="Job Titles">
-                      {/* {jobTitles.map((title) => (
-                        <CommandItem key={title} onSelect={() => setSearchQuery(title)}>
-                          <Briefcase className="mr-2 h-4 w-4" />
-                          {title}
-                        </CommandItem>
-                      ))} */}
-                    </CommandGroup>
-                    <CommandGroup heading="Locations">
-                      {/* {locations.map((location) => (
-                        <CommandItem key={location} onSelect={() => setSearchQuery(location)}>
-                          <MapPin className="mr-2 h-4 w-4" />
-                          {location}
-                        </CommandItem>
-                      ))} */}
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-              <Input type="submit" value="Find Jobs" className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer" />
-            </form>
+          <form
+            onSubmit={handleSubmit}
+            className="flex items-center space-x-2"
+          >
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search for jobs..."
+              className="flex-grow px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Search
+            </button>
+          </form>
             <div className="flex flex-wrap justify-center gap-2">
               {['Remote', 'Full-time', 'Entry-level'].map((filter) => (
                 <button
