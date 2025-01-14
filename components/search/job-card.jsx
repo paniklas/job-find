@@ -1,8 +1,11 @@
 import { CalendarIcon, MapPinIcon, BriefcaseIcon, DollarSignIcon } from 'lucide-react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
+import Link from 'next/link';
+
 
 const JobCard = ({ job }) => {
+
   return (
     <Card className="w-full max-w-2xl">
       <CardHeader>
@@ -34,10 +37,12 @@ const JobCard = ({ job }) => {
         </div>
       </CardContent>
       <CardFooter>
-        <button className="flex items-center justify-center w-full py-2 px-4 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-          <BriefcaseIcon className="mr-2 h-4 w-4" />
-          Apply Now
-        </button>
+        <Link href={`/category/jobs/job/${job.slug}`}>
+          <button className="flex items-center justify-center w-full py-2 px-4 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+            <BriefcaseIcon className="mr-2 h-4 w-4" />
+            Apply Now
+          </button>
+        </Link>
       </CardFooter>
     </Card>
   )

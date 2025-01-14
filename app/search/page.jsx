@@ -2,7 +2,11 @@ import { sampleJobs } from "@/data/sampledata";
 import JobGrid from "@/components/search/job-grid";
 
 const SearchPage = async ({ searchParams }) => {
-    console.log(searchParams);
+
+  console.log(searchParams);
+
+  const { query } = await searchParams;
+  console.log(query);
 
     // const { query } = await searchParams;
 

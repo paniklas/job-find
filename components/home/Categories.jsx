@@ -25,7 +25,7 @@ const Categories = () => {
                             </CardHeader>
                             <CardContent>
                                 <p className="text-sm text-gray-500 dark:text-gray-400">Explore jobs in {category.name}</p>
-                                        <Link href={`/category/jobs/job/${category.slug}`}>
+                                        <Link href={`/category/jobs/${category.slug}`}>
                                             <Button className="mt-4" variant="outline">
                                                 View Jobs
                                                 <ArrowRight className="ml-2 h-4 w-4" />
