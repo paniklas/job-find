@@ -5,7 +5,7 @@ import { categories } from "@/data/sampledata"
 import Link from "next/link";
 
 
-const Categories = () => {
+const Categories = ({ categories }) => {
 
     return (
         <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-800">
@@ -14,12 +14,11 @@ const Categories = () => {
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {categories.map((category) => (
                         <Card
-                            key={category.id}
+                            key={category._id}
                             className="cursor-pointer hover:shadow-lg transition-shadow"
                         >
                             <CardHeader>
                                 <CardTitle className="flex items-center">
-                                    <span className="text-2xl mr-2">{category.icon}</span>
                                         <span className="text-2xl">{category.name}</span>
                                 </CardTitle>
                             </CardHeader>

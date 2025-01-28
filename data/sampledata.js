@@ -45,9 +45,6 @@ export const sampleJobs = [
         title: "Frontend Developer",
         company: "TechCorp",
         description: "We're looking for a skilled frontend developer to join our team and create amazing user experiences.",
-        postedDate: "2 days ago",
-        createdDate: "2023-05-01",
-        expirationDate: "2023-06-01",
         salary: "$80,000 - $120,000",
         location: "Remote",
         categories: ["frontend", "remote"],
@@ -57,7 +54,10 @@ export const sampleJobs = [
             "Experience with TypeScript and modern JavaScript features",
             "Familiarity with server-side rendering and Next.js",
             "Excellent problem-solving and communication skills"
-          ]
+          ],
+          postedDate: "2 days ago",
+          createdDate: "2023-05-01",
+          expirationDate: "2023-06-01",
     },
     {
         id: "2",
