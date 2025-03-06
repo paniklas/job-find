@@ -31,7 +31,17 @@ const Header = () => {
             
           </nav>
           <div className="ml-4">
-            <Button>Sign Up</Button>
+            <Link href="/sign-in">
+              <Button
+                variant="outline"
+              >
+                Sign in
+              </Button>
+            </Link>
+
+            <Link href="/sign-up">
+              <Button className="ml-2">Sign Up</Button>
+            </Link>
           </div>
         </div>
       </header>

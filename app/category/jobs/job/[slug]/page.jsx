@@ -8,6 +8,7 @@ import { sampleJobs } from "@/data/sampledata"
 const JobPage = async ({ params }) => {
 
     const { slug } = await params;
+    console.log(slug);
 
     const job = sampleJobs.find(job => job.slug === slug);
     console.log(job);

@@ -14,14 +14,12 @@ export default async function Home() {
       
       {/* Main */}
       <div className="flex-1">
-        
+        {/* <h1 className="text-2xl text-red-500">{JSON.stringify(categories, null, 2)}</h1> */}
         {/* Hero */}
         <Hero />
 
         {/* Categories */}
-        <Categories 
-          categories={categories}
-        />
+        <Categories categories={categories} />
 
         {/* How It Works */}
         <HowWorks />
