@@ -1,15 +1,20 @@
 import { Briefcase } from "lucide-react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { currentUser } from "@clerk/nextjs/server";
+import { UserButton } from "@clerk/nextjs";
 
-const Header = () => {
+
+const Header = async () => {
 
   const menuLinks = [
-    { name: 'Features', href: '#features' },
-    { name: 'How It Works', href: '#how-it-works' },
-    { name: 'Pricing', href: '#pricing' },
+    { name: 'Features', href: '/#features' },
+    { name: 'How It Works', href: '/#how-it-works' },
+    { name: 'Pricing', href: '/#pricing' },
     { name: 'Contact', href: '/contact' },
   ]
+
+    const user = await currentUser();
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -28,21 +33,35 @@ const Header = () => {
                 {link.name}
               </Link>
             ))}
+            {user && (
+              <Link
+                className="text-sm font-medium hover:underline underline-offset-4"
+                href="/dashboard/admin"
+              >
+                Dashboard
+              </Link>
+            )}
             
           </nav>
-          <div className="ml-4">
-            <Link href="/sign-in">
-              <Button
-                variant="outline"
-              >
-                Sign in
-              </Button>
-            </Link>
+            <div className="ml-4">
+              {user ? (
+                <UserButton />
+              ) : (
+                <>
+                  <Link href="/sign-in">
+                    <Button
+                      variant="outline"
+                    >
+                      Sign in
+                    </Button>
+                  </Link>
 
-            <Link href="/sign-up">
-              <Button className="ml-2">Sign Up</Button>
-            </Link>
-          </div>
+                  <Link href="/sign-up">
+                    <Button className="ml-2">Sign Up</Button>
+                  </Link>
+                </>
+              )}
+            </div>
         </div>
       </header>
     )
