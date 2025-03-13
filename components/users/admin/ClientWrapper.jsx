@@ -15,7 +15,7 @@ const ClientWrapper = () => {
     return (
         <>
             <div className="mb-8">
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-4 w-full">
                     <h2 className="text-xl font-semibold">Categories</h2>
                         <Button
                             onClick={() => setIsCreateCategoryModalOpen(true)}
@@ -27,7 +27,7 @@ const ClientWrapper = () => {
             </div>
 
             <div className="mb-8">
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-4 w-full">
                     <h2 className="text-xl font-semibold mb-4">Jobs</h2>
                     <Button
                         onClick={() => setIsCreateJobModalOpen(true)}

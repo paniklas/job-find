@@ -36,7 +36,7 @@ const CategoryList = () => {
   
     return (
         <div>
-            <Table>
+            <Table className="w-full">
                 <TableHeader>
                     <TableRow>
                     <TableHead>Name</TableHead>
