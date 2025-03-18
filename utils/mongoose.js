@@ -8,8 +8,12 @@ export const connectToDatabase = async () => {
             console.log('Using existing connection');
             return;
         }
+
+        console.log('Using new connection');
         
         const db = await mongoose.connect(process.env.MONGO_URI, {});
+
+        console.log('DB connected');
 
         connection.isConnected = db.connections[0].readyState;
         console.log('Connected to database');

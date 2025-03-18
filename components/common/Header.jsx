@@ -8,10 +8,10 @@ import { UserButton } from "@clerk/nextjs";
 const Header = async () => {
 
   const menuLinks = [
-    { name: 'Features', href: '/#features' },
-    { name: 'How It Works', href: '/#how-it-works' },
-    { name: 'Pricing', href: '/#pricing' },
-    { name: 'Contact', href: '/contact' },
+    { id:"1", name: 'Features', href: '/#features' },
+    { id:"2", name: 'How It Works', href: '/#how-it-works' },
+    { id: "3", name: 'Pricing', href: '/#pricing' },
+    { id: "4", name: 'Contact', href: '/contact' }
   ]
 
     const user = await currentUser();
@@ -26,7 +26,7 @@ const Header = async () => {
           <nav className="ml-auto flex gap-4 sm:gap-6">
             {menuLinks.map((link) => (
               <Link
-                key={link.name}
+                key={link.id}
                 className="text-sm font-medium hover:underline underline-offset-4"
                 href={link.href}
               >

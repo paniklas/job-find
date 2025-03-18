@@ -6,6 +6,7 @@ import { Dialog } from "@/components/ui/dialog";
 import CategoryList from "@/components/users/admin/CategoryList";
 import JobList from "@/components/users/admin/JobList";
 import CategoryForm from "@/components/users/admin/CategoryForm";
+import JobForm from "@/components/users/admin/JobForm";
 
 const ClientWrapper = () => {
 
@@ -44,6 +45,15 @@ const ClientWrapper = () => {
             >
                 <CategoryForm
                     onSuccess={() => setIsCreateCategoryModalOpen(false)}
+                />
+            </Dialog>
+
+            <Dialog
+                open={isCreateJobModalOpen}
+                onOpenChange={setIsCreateJobModalOpen}
+            >
+                <JobForm
+                    onSuccess={() => setIsCreateJobModalOpen(false)}
                 />
             </Dialog>
         
