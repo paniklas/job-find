@@ -4,6 +4,8 @@ import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import CTA from "@/components/common/CTA";
 import { ClerkProvider } from '@clerk/nextjs';
+import { Toaster } from "@/components/ui/sonner";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,6 +36,10 @@ export default function RootLayout({ children }) {
             </main>
             <CTA />
           <Footer />
+          <Toaster richColors toastOptions={{
+              duration: 5000,
+              closeButton: true
+          }} />
         </body>
       </html>
     </ClerkProvider>

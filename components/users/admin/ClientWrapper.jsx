@@ -8,7 +8,7 @@ import JobList from "@/components/users/admin/JobList";
 import CategoryForm from "@/components/users/admin/CategoryForm";
 import JobForm from "@/components/users/admin/JobForm";
 
-const ClientWrapper = () => {
+const ClientWrapper = ({ initialCategories }) => {
 
     const [isCreateCategoryModalOpen, setIsCreateCategoryModalOpen] = useState(false);
     const [isCreateJobModalOpen, setIsCreateJobModalOpen] = useState(false);
@@ -24,7 +24,9 @@ const ClientWrapper = () => {
                             Create Category
                         </Button>
                     </div>
-                    <CategoryList />
+                    <CategoryList
+                        initialCategories={initialCategories}
+                    />
             </div>
 
             <div className="mb-8">
@@ -44,7 +46,7 @@ const ClientWrapper = () => {
                 onOpenChange={setIsCreateCategoryModalOpen}
             >
                 <CategoryForm
-                    onSuccess={() => setIsCreateCategoryModalOpen(false)}
+                    onClick={() => setIsCreateCategoryModalOpen(false)}
                 />
             </Dialog>
 
@@ -53,7 +55,7 @@ const ClientWrapper = () => {
                 onOpenChange={setIsCreateJobModalOpen}
             >
                 <JobForm
-                    onSuccess={() => setIsCreateJobModalOpen(false)}
+                    onClick={() => setIsCreateJobModalOpen(false)}
                 />
             </Dialog>
         

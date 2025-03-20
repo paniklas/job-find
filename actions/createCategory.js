@@ -7,19 +7,24 @@ import slugify from 'slugify'; // For generating slugs
 
 // Create category
 export async function createCategory(formData) {
-    const { title } = Object.fromEntries(formData);
+
+    console.log("Form data from client", formData);
+
+    const { name, description } = Object.fromEntries(formData);
 
     try {
         await connectToDatabase();
 
+        // Generate a slug from the name
+        const slug = slugify(name, { lower: true });
+
         const newCategory = new Categories({
-            title: title
+            name: name,
+            description: description,
+            slug: slug
         });
 
-        // Generate a slug from the title
-        const slug = slugify(title, { lower: true });
-
-        await newCategory.save({ title, slug });
+        await newCategory.save({ name, description, slug });
         revalidatePath("/dashboard/admin");
 
         return { success: "Category added successfully" };

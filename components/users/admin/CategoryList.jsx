@@ -12,27 +12,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 // import DeleteConfirmationDialog from "./DeleteConfirmationDialog"
 
 
-// Mock data for categories
-const initialCategories = [
-    { id: 1, name: "Technology" },
-    { id: 2, name: "Marketing" },
-    { id: 3, name: "Finance" },
-];
-
-const CategoryList = () => {
-    // const [categories, setCategories] = useState(initialCategories);
-    // const [editingCategory, setEditingCategory] = useState(null);
-    // const [deletingCategoryId, setDeletingCategoryId] = useState(null);
-  
-    // const handleDelete = (id) => {
-    //   setCategories(categories.filter((category) => category.id !== id))
-    //   setDeletingCategoryId(null)
-    // }
-  
-    // const handleUpdate = (updatedCategory: { }) => {
-    //   setCategories(categories.map((category) => (category.id === updatedCategory.id ? updatedCategory : category)))
-    //   setEditingCategory(null)
-    // }
+const CategoryList = ({ initialCategories }) => {
+    console.log("Category List categories", initialCategories);
   
     return (
         <div>
@@ -40,13 +21,15 @@ const CategoryList = () => {
                 <TableHeader>
                     <TableRow>
                     <TableHead>Name</TableHead>
+                    <TableHead>Description</TableHead>
                     <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {initialCategories.map((category) => (
-                        <TableRow key={category.id}>
+                    {initialCategories?.categories?.map((category) => (
+                        <TableRow key={category._id}>
                             <TableCell>{category.name}</TableCell>
+                            <TableCell>{category.description}</TableCell>
                             <TableCell>
                                 <Button
                                     variant="outline"

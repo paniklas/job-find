@@ -8,7 +8,7 @@ export const getCategories = async () => {
         await connectToDatabase();
         const categories = await Categories.find().lean();
 
-        console.log("Categories", categories);
+        // console.log("Categories", categories);
 
         return {
             categories,
