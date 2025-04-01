@@ -55,7 +55,7 @@ export default function CategoryForm() {
             toast.success("Success", {
                 description: result.success,
             })
-            // form.reset();
+            form.reset();
         }
         else {
             const errorMessage = 

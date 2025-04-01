@@ -18,13 +18,6 @@ import {
 
 import { createCategory } from "@/actions/createCategory";
 
-// Mock data for categories
-const initialCategories = [
-    { id: 1, name: "Technology" },
-    { id: 2, name: "Marketing" },
-    { id: 3, name: "Finance" },
-];
-
 const formSchema = z.object({
     title: z.string().min(2, {
         message: "Category name must be at least 2 characters.",
@@ -34,7 +27,8 @@ const formSchema = z.object({
       })
   });
 
-export default function JobForm({ initialData }) {
+export default function JobForm({ initialCategories }) {
+
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -68,50 +62,70 @@ async function onSubmit(data) {
     return (
         <DialogContent>
             <DialogHeader>
-                <DialogTitle>{initialData ? "Edit Category" : "Create Job"}</DialogTitle>
+                {/* <DialogTitle>{initialData ? "Edit Category" : "Create Job"}</DialogTitle> */}
+                <DialogTitle>Initial Data</DialogTitle>
             </DialogHeader>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                    control={form.control}
-                    name="title"
-                    render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Job Title</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Enter job title" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
+
+                    {/* Title */}
+                    <FormField
+                        control={form.control}
+                        name="title"
+                        render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Select Category</FormLabel>
-                                <FormControl>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select a category" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {initialCategories.map((category) => (
-                                                <SelectItem key={category.id} value={category.name}>
-                                                    {category.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </FormControl>
+                            <FormLabel>Job Title</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Enter job title" {...field} />
+                            </FormControl>
                             <FormMessage />
                         </FormItem>
-                    )}
-                />
-                <Button type="submit">Save</Button>
+                        )}
+                    />
+
+                    {/* Description */}
+                    <FormField
+                        control={form.control}
+                        name="description"
+                        render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Job Description</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Enter description" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                        )}
+                    />
+
+                    {/* Select Category */}
+                    <FormField
+                        control={form.control}
+                        name="selectCategory"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Select Category</FormLabel>
+                                    <FormControl>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select a category" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {initialCategories?.categories.map((category) => (
+                                                    <SelectItem key={category._id} value={category.name}>
+                                                        {category.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button type="submit">Save</Button>
                 </form>
             </Form>
         </DialogContent>

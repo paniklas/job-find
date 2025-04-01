@@ -30,6 +30,10 @@ const jobsSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    description: {
+        type: String,
+        required: false
+    },
     jobType: {
         type: String,
         required: true
@@ -38,10 +42,6 @@ const jobsSchema = new mongoose.Schema({
         type: String,
         required: true
     }],
-    description: {
-        type: String,
-        required: true
-    },
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Categories',

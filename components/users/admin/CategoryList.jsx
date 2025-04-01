@@ -13,7 +13,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 
 const CategoryList = ({ initialCategories }) => {
-    console.log("Category List categories", initialCategories);
+
+    const [deletingCategoryId, setDeletingCategoryId] = useState(false);
   
     return (
         <div>
@@ -40,7 +41,7 @@ const CategoryList = ({ initialCategories }) => {
                                 </Button>
                                 <Button
                                     variant="destructive"
-                                    // onClick={() => setDeletingCategoryId(category.id)}
+                                    onClick={() => setDeletingCategoryId(category.id)}
                                 >
                                     Delete
                                 </Button>

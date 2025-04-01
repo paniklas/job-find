@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 // Mock data for jobs
 const initialJobs = [
-  { id: 1, title: "Software Engineer", category: "Technology" },
+  { id: 1, title: "Software Engineer", description:"Technology", category: "Technology" },
   { id: 2, title: "Marketing Manager", category: "Marketing" },
   { id: 3, title: "Financial Analyst", category: "Finance" },
 ]
@@ -49,6 +49,7 @@ const JobList = () => {
                     {initialJobs.map((job) => (
                         <TableRow key={job.id}>
                             <TableCell>{job.title}</TableCell>
+                            <TableCell>{job.description}</TableCell>
                             <TableCell>{job.category}</TableCell>
                             <TableCell>
                             <Button variant="outline" className="mr-2" onClick={() => setEditingJob(job)}>

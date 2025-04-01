@@ -13,7 +13,7 @@ const AdminPage = async () => {
 
     return (
         <div className="min-h-screen w-full">
-            <div className="container mx-auto p-4">
+            <div className="container mx-auto md:mt-6">
                 <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
                 <ClientWrapper
                     initialCategories={initialCategories}

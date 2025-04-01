@@ -56,6 +56,7 @@ const ClientWrapper = ({ initialCategories }) => {
             >
                 <JobForm
                     onClick={() => setIsCreateJobModalOpen(false)}
+                    initialCategories={initialCategories}
                 />
             </Dialog>
         
