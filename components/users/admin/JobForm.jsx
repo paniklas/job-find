@@ -1,12 +1,12 @@
 "use client"
 
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
     Select,
     SelectContent,
@@ -14,33 +14,37 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select";
-  
-
 import { createCategory } from "@/actions/createCategory";
 
 const formSchema = z.object({
     title: z.string().min(2, {
-        message: "Category name must be at least 2 characters.",
-      })
-      .regex(/^[a-zA-Z\s]+$/, {
-        message: "Category name can only contain letters and spaces.",
-      })
-  });
+        message: "Job title must be at least 2 characters.",
+    }),
+    // Add description (make optional if needed with .optional())
+    description: z.string().min(5, {
+        message: "Description must be at least 5 characters.",
+    }), // Adjust validation as needed
+    selectCategory: z.string().min(1, {
+        message: "Please select a category.",
+    }),
+});
 
 export default function JobForm({ initialCategories }) {
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-        title: "",
-        description: "",
-    },
-})
+            title: "",
+            description: "",
+            selectCategory: "",
+        },
+    })
 
 async function onSubmit(data) {
         const formData = new FormData();
         formData.append("title", data.title);
         formData.append("description", data.description);
+        formData.append("category", data.selectCategory);
 
         console.log("Form data", formData);
         console.log("Success")
@@ -57,17 +61,15 @@ async function onSubmit(data) {
         // } catch (error) {
         //     console.log(error);
         // }
-    }
+}
 
     return (
         <DialogContent>
             <DialogHeader>
-                {/* <DialogTitle>{initialData ? "Edit Category" : "Create Job"}</DialogTitle> */}
                 <DialogTitle>Initial Data</DialogTitle>
             </DialogHeader>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-
                     {/* Title */}
                     <FormField
                         control={form.control}
@@ -105,23 +107,28 @@ async function onSubmit(data) {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Select Category</FormLabel>
+                                {/* Ensure the field.value passed to defaultValue is initially "" */}
+                                <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value} // This will be "" initially
+                                >
                                     <FormControl>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Select a category" />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {initialCategories?.categories.map((category) => (
-                                                    <SelectItem key={category._id} value={category.name}>
-                                                        {category.name}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
+                                        <SelectTrigger>
+                                            {/* The placeholder shows when field.value is "" */}
+                                            <SelectValue placeholder="Select a category" />
+                                        </SelectTrigger>
                                     </FormControl>
-                                <FormMessage />
+                                    <SelectContent>
+                                        {/* Map over your actual categories */}
+                                        {initialCategories?.categories?.map((category) => (
+                                            // Ensure category.name is never an empty string if it's a valid category
+                                            <SelectItem key={category._id} value={category.name}>
+                                                {category.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage /> {/* This will show the validation error if nothing is selected */}
                             </FormItem>
                         )}
                     />

@@ -1,15 +1,18 @@
 import ClientWrapper from "@/components/users/admin/ClientWrapper";
-import { getCategories } from "@/utils/getData";
+import { getCategories, getJobs } from "@/utils/getData";
 
 
 const AdminPage = async () => {
 
+    // Fetch categories
     const initialCategoriesRaw = await getCategories();
-    // console.log("Initial categories", initialCategoriesRaw);
-
     // Convert MongoDB documents to plain JS objects
     const initialCategories = JSON.parse(JSON.stringify(initialCategoriesRaw));
-    // console.log("Initial categories", initialCategories);
+    
+    // Fetch jobs
+    const jobsRaw = await getJobs();
+    const jobs = JSON.parse(JSON.stringify(jobsRaw));
+    console.log("Jobs", jobs);
 
     return (
         <div className="min-h-screen w-full">
@@ -17,6 +20,7 @@ const AdminPage = async () => {
                 <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
                 <ClientWrapper
                     initialCategories={initialCategories}
+                    jobs={jobs}
                 />
             </div>
         </div>

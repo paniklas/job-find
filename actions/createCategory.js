@@ -34,7 +34,6 @@ export async function createCategory(formData) {
     }
 }
 
-
 export async function getAllCategories() {
     try {
         await connectToDatabase();

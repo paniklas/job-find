@@ -34,39 +34,39 @@ const jobsSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    jobType: {
-        type: String,
-        required: true
-    },
-    company: [{
-        type: String,
-        required: true
-    }],
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Categories',
         required: true
     }],
-    location: {
-        type: String,
-        required: true
-    },
-    salary: {
-        type: Number,
-        required: true
-    },
-    requirements: [{
-        type: String,
-        required: true
-    }],
-    postedDate: {
-        type: Date,
-        required: true
-    },
-    expirationDate: {
-        type: Date,
-        required: true
-    },
+    // jobType: {
+    //     type: String,
+    //     required: true
+    // },
+    // company: [{
+    //     type: String,
+    //     required: true
+    // }],
+    // location: {
+    //     type: String,
+    //     required: true
+    // },
+    // salary: {
+    //     type: Number,
+    //     required: true
+    // },
+    // requirements: [{
+    //     type: String,
+    //     required: true
+    // }],
+    // postedDate: {
+    //     type: Date,
+    //     required: true
+    // },
+    // expirationDate: {
+    //     type: Date,
+    //     required: true
+    // },
 }, {
     timestamps: true, toJSON: { virtuals: true },
     toObject: { virtuals: true } 

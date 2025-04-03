@@ -8,7 +8,7 @@ import JobList from "@/components/users/admin/JobList";
 import CategoryForm from "@/components/users/admin/CategoryForm";
 import JobForm from "@/components/users/admin/JobForm";
 
-const ClientWrapper = ({ initialCategories }) => {
+const ClientWrapper = ({ initialCategories, jobs}) => {
 
     const [isCreateCategoryModalOpen, setIsCreateCategoryModalOpen] = useState(false);
     const [isCreateJobModalOpen, setIsCreateJobModalOpen] = useState(false);
@@ -38,7 +38,9 @@ const ClientWrapper = ({ initialCategories }) => {
                         Create Job
                     </Button>
                 </div>
-                <JobList />
+                <JobList
+                    jobs={jobs}
+                />
             </div>
 
             <Dialog

@@ -14,7 +14,7 @@ const initialJobs = [
   { id: 3, title: "Financial Analyst", category: "Finance" },
 ]
 
-const JobList = () => {
+const JobList = ({ jobs }) => {
     // const [jobs, setJobs] = useState(initialJobs);
     // const [isCreateJobModalOpen, setIsCreateJobModalOpen] = useState(false);
     // const [editingJob, setEditingJob] = useState(null);
@@ -41,13 +41,14 @@ const JobList = () => {
                 <TableHeader>
                     <TableRow>
                     <TableHead>Title</TableHead>
+                    <TableHead>Description</TableHead>
                     <TableHead>Category</TableHead>
                     <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {initialJobs.map((job) => (
-                        <TableRow key={job.id}>
+                    {jobs.jobs.map((job) => (
+                        <TableRow key={job._id}>
                             <TableCell>{job.title}</TableCell>
                             <TableCell>{job.description}</TableCell>
                             <TableCell>{job.category}</TableCell>
