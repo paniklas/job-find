@@ -12,7 +12,7 @@ const AdminPage = async () => {
     // Fetch jobs
     const jobsRaw = await getJobs();
     const jobs = JSON.parse(JSON.stringify(jobsRaw));
-    console.log("Jobs", jobs);
+    // console.log("Jobs", jobs);
 
     return (
         <div className="min-h-screen w-full">

@@ -1,39 +1,50 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Dialog } from "@/components/ui/dialog";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+  } from '@/components/ui/alert-dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-// import JobForm from "./JobForm";
-// import DeleteConfirmationDialog from "./DeleteConfirmationDialog";
+import { deleteJob } from "@/actions/deleteJob";
 
-// Mock data for jobs
-const initialJobs = [
-  { id: 1, title: "Software Engineer", description:"Technology", category: "Technology" },
-  { id: 2, title: "Marketing Manager", category: "Marketing" },
-  { id: 3, title: "Financial Analyst", category: "Finance" },
-]
 
 const JobList = ({ jobs }) => {
-    // const [jobs, setJobs] = useState(initialJobs);
-    // const [isCreateJobModalOpen, setIsCreateJobModalOpen] = useState(false);
-    // const [editingJob, setEditingJob] = useState(null);
-    // const [deletingJobId, setDeletingJobId] = useState<number | null>(null)
-  
-    // const handleCreate = (newJob) => {
-    //   setJobs([...jobs, { ...newJob, id: jobs.length + 1 }])
-    //   setIsCreateJobModalOpen(false)
-    // }
-  
-    // const handleUpdate = (updatedJob) => {
-    //   setJobs(jobs.map((job) => (job.id === updatedJob.id ? updatedJob : job)))
-    //   setEditingJob(null)
-    // }
-  
-    // const handleDelete = (id) => {
-    //   setJobs(jobs.filter((job) => job.id !== id))
-    //   setDeletingJobId(null)
-    // }
+
+    const [deletingJobId, setDeletingJobId] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [editingJob, setEditingJob] = useState(null);
+    
+    const handleDelete = async () => {
+        if (!deletingJobId) return;
+        
+        setIsDeleting(true);
+        try {
+            const result = await deleteJob(deletingJobId);
+          
+          if (result.success) {
+                toast.success("Success", {
+                    description: result.success
+                });
+          } else {
+            toast.error(result.error);
+          }
+        } catch (error) {
+            console.error(error);
+            toast.error("An unexpected error occurred");
+        } finally {
+            setIsDeleting(false);
+            setDeletingJobId(null);
+        }
+      };
   
     return (
         <>
@@ -47,39 +58,66 @@ const JobList = ({ jobs }) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {jobs.jobs.map((job) => (
-                        <TableRow key={job._id}>
-                            <TableCell>{job.title}</TableCell>
-                            <TableCell>{job.description}</TableCell>
-                            <TableCell>{job.category}</TableCell>
-                            <TableCell>
-                            <Button variant="outline" className="mr-2" onClick={() => setEditingJob(job)}>
-                                Edit
-                            </Button>
-                            <Button variant="destructive" onClick={() => setDeletingJobId(job.id)}>
-                                Delete
-                            </Button>
+                        {jobs.jobs.map((job) => (
+                            <TableRow key={job._id}>
+                                <TableCell>{job.title}</TableCell>
+                                <TableCell>{job.description}</TableCell>
+                                <TableCell>
+                                    {job.categories?.map(category => category.name).join(", ") || "No category"}
+                                </TableCell>
+                                <TableCell>
+                                    <Button
+                                        variant="outline"
+                                        className="mr-2"
+                                        onClick={() => setEditingJob(job)}
+                                    >
+                                        Edit
+                                    </Button>
+                                    <Button
+                                            variant="destructive"
+                                            onClick={() => setDeletingJobId(job._id)}
+                                        >
+                                        Delete
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    {jobs.jobs.length === 0 && (
+                        <TableRow className="p-12">
+                            <TableCell colSpan={4} className="text-center">
+                                <span className="text-xl">No jobs available</span>
                             </TableCell>
                         </TableRow>
-                    ))}
+                    )}
                 </TableBody>
             </Table>
-    
-            {/* <Dialog open={isCreateJobModalOpen} onOpenChange={setIsCreateJobModalOpen}>
-                <JobForm onSuccess={handleCreate} />
-            </Dialog> */}
-    
-            {/* <Dialog open={!!editingJob} onOpenChange={() => setEditingJob(null)}>
-                {editingJob && <JobForm initialData={editingJob} onSuccess={handleUpdate} />}
-            </Dialog>
-    
-            <DeleteConfirmationDialog
-                isOpen={!!deletingJobId}
-                onClose={() => setDeletingJobId(null)}
-                onConfirm={() => deletingJobId && handleDelete(deletingJobId)}
-                title="Delete Job"
-                description="Are you sure you want to delete this job? This action cannot be undone."
-            /> */}
+
+            {/* Confirmation Dialog */}
+            <AlertDialog
+                open={!!deletingJobId}
+                onOpenChange={(open) => !open && setDeletingJobId(null)}
+                >
+                <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete the job {deletingJobId && jobs.jobs.find(job => job._id === deletingJobId)?.title && (
+                            <span className="font-medium"> "{jobs.jobs.find(job => job._id === deletingJobId).title}"</span>
+                        )}
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                        onClick={handleDelete}
+                        disabled={isDeleting}
+                        className="bg-red-600 hover:bg-red-700"
+                    >
+                    {isDeleting ? "Deleting..." : "Delete"}
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </>
     )
   }

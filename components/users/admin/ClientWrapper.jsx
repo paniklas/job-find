@@ -61,7 +61,6 @@ const ClientWrapper = ({ initialCategories, jobs}) => {
                     initialCategories={initialCategories}
                 />
             </Dialog>
-        
         </>
     )
 }

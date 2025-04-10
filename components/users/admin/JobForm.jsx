@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -14,7 +16,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select";
-import { createCategory } from "@/actions/createCategory";
+import { createJob } from "@/actions/createJob";
 
 const formSchema = z.object({
     title: z.string().min(2, {
@@ -31,6 +33,8 @@ const formSchema = z.object({
 
 export default function JobForm({ initialCategories }) {
 
+    const [isPending, setIsPending] = useState(false);
+
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -40,27 +44,35 @@ export default function JobForm({ initialCategories }) {
         },
     })
 
-async function onSubmit(data) {
+async function onSubmit() {
+
+        setIsPending(true);
+        const values = form.getValues();
+
         const formData = new FormData();
-        formData.append("title", data.title);
-        formData.append("description", data.description);
-        formData.append("category", data.selectCategory);
+        formData.append("title", values.title);
+        formData.append("description", values.description);
+        formData.append("category", values.selectCategory);
 
-        console.log("Form data", formData);
-        console.log("Success")
+        console.log("Form data Job Form", formData);
 
-        // try {
-        //     const result = await createCategory(formData);
-        //     if (result?.error) {
-        //         console.log("Error", result.error);
-        //         toast.error(result.error);
-        //     } else {
-        //         console.log("Success", result);
-        //         toast.success(result.success);   
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            const result = await createJob(formData);
+            setIsPending(false);
+            if (result?.success) {
+                console.log("Success", result);
+                toast.success("Success", {
+                    description: result.success,
+                })
+
+                form.reset();
+            } else  {
+                console.log("Error", result.error);
+                toast.error(result.error);
+            }
+        } catch (error) {
+            console.log(error);
+        }
 }
 
     return (
@@ -107,32 +119,33 @@ async function onSubmit(data) {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Select Category</FormLabel>
-                                {/* Ensure the field.value passed to defaultValue is initially "" */}
                                 <Select
                                     onValueChange={field.onChange}
-                                    defaultValue={field.value} // This will be "" initially
+                                    defaultValue={field.value}
                                 >
                                     <FormControl>
                                         <SelectTrigger>
-                                            {/* The placeholder shows when field.value is "" */}
                                             <SelectValue placeholder="Select a category" />
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        {/* Map over your actual categories */}
                                         {initialCategories?.categories?.map((category) => (
-                                            // Ensure category.name is never an empty string if it's a valid category
                                             <SelectItem key={category._id} value={category.name}>
                                                 {category.name}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
-                                <FormMessage /> {/* This will show the validation error if nothing is selected */}
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">Save</Button>
+                    <Button
+                        type="submit"
+                        disabled={isPending}
+                    >
+                        {isPending ? "Saving..." : "Save"}
+                    </Button>
                 </form>
             </Form>
         </DialogContent>
