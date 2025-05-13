@@ -54,34 +54,42 @@ const JobList = ({ jobs }) => {
                     <TableHead>Title</TableHead>
                     <TableHead>Description</TableHead>
                     <TableHead>Category</TableHead>
+                    <TableHead>Company</TableHead>
+                    <TableHead>Location</TableHead>
+                    <TableHead>Salary</TableHead>
+                    <TableHead>Job Type</TableHead>
                     <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                        {jobs.jobs.map((job) => (
-                            <TableRow key={job._id}>
-                                <TableCell>{job.title}</TableCell>
-                                <TableCell>{job.description}</TableCell>
-                                <TableCell>
-                                    {job.categories?.map(category => category.name).join(", ") || "No category"}
-                                </TableCell>
-                                <TableCell>
-                                    <Button
-                                        variant="outline"
-                                        className="mr-2"
-                                        onClick={() => setEditingJob(job)}
+                    {jobs.jobs.map((job) => (
+                        <TableRow key={job._id}>
+                            <TableCell>{job.title}</TableCell>
+                            <TableCell>{job.description}</TableCell>
+                            <TableCell>
+                                {job.categories?.map(category => category.name).join(", ") || "No category"}
+                            </TableCell>
+                            <TableCell>{job.company}</TableCell>
+                            <TableCell>{job.location}</TableCell>
+                            <TableCell>{job.salary ? `$${job.salary}` : "Not specified"}</TableCell>
+                            <TableCell>{job.jobType}</TableCell>
+                            <TableCell>
+                                <Button
+                                    variant="outline"
+                                    className="mr-2"
+                                    onClick={() => setEditingJob(job)}
+                                >
+                                    Edit
+                                </Button>
+                                <Button
+                                        variant="destructive"
+                                        onClick={() => setDeletingJobId(job._id)}
                                     >
-                                        Edit
-                                    </Button>
-                                    <Button
-                                            variant="destructive"
-                                            onClick={() => setDeletingJobId(job._id)}
-                                        >
-                                        Delete
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                                    Delete
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ))}
                     {jobs.jobs.length === 0 && (
                         <TableRow className="p-12">
                             <TableCell colSpan={4} className="text-center">

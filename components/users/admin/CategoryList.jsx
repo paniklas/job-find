@@ -76,6 +76,13 @@ const CategoryList = ({ initialCategories }) => {
               </TableCell>
             </TableRow>
           ))}
+           {categories.length === 0 && (
+              <TableRow className="p-12">
+                  <TableCell colSpan={4} className="text-center">
+                      <span className="text-xl">No categories available</span>
+                  </TableCell>
+              </TableRow>
+            )}
         </TableBody>
       </Table>
 

@@ -20,6 +20,7 @@ const categoriesSchema = new mongoose.Schema({
     }
 );
 
+
 const jobsSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -39,26 +40,26 @@ const jobsSchema = new mongoose.Schema({
         ref: 'Categories',
         required: true
     }],
-    // jobType: {
+    jobType: {
+        type: String,
+        required: true
+    },
+    company: {
+        type: String,
+        required: true
+    },
+    location: {
+        type: String,
+        required: true
+    },
+    salary: {
+        type: Number,
+        required: false
+    },
+    // companyLogo: {
     //     type: String,
     //     required: true
     // },
-    // company: [{
-    //     type: String,
-    //     required: true
-    // }],
-    // location: {
-    //     type: String,
-    //     required: true
-    // },
-    // salary: {
-    //     type: Number,
-    //     required: true
-    // },
-    // requirements: [{
-    //     type: String,
-    //     required: true
-    // }],
     // postedDate: {
     //     type: Date,
     //     required: true

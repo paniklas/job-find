@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
@@ -41,6 +41,10 @@ export default function JobForm({ initialCategories }) {
             title: "",
             description: "",
             selectCategory: "",
+            jobType: "",
+            company: "",
+            location: "",
+            salary: "",
         },
     })
 
@@ -53,8 +57,10 @@ async function onSubmit() {
         formData.append("title", values.title);
         formData.append("description", values.description);
         formData.append("category", values.selectCategory);
-
-        console.log("Form data Job Form", formData);
+        formData.append("jobType", values.jobType);
+        formData.append("company", values.company);
+        formData.append("location", values.location);
+        formData.append("salary", values.salary);
 
         try {
             const result = await createJob(formData);
@@ -140,6 +146,74 @@ async function onSubmit() {
                             </FormItem>
                         )}
                     />
+
+                    {/* Job Type */}
+                    <FormField
+                        control={form.control}
+                        name="jobType"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Job Type</FormLabel>
+                                <FormControl>
+                                <Input placeholder="Enter job type (e.g. Full-time, Part-time)" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Location */}
+                    <FormField
+                        control={form.control}
+                        name="location"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Location</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Enter location" {...field} />
+                                </FormControl>
+                                <FormDescription>Enter the location for the job.</FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Company */}
+                    <FormField
+                        control={form.control}
+                        name="company"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Company</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Enter company name" {...field} />
+                                </FormControl>
+                                <FormDescription>For multiple companies, separate with commas</FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Salary */}
+                    <FormField
+                        control={form.control}
+                        name="salary"
+                        render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Salary</FormLabel>
+                            <FormControl>
+                                <Input
+                                    type="number"
+                                    placeholder="Enter salary amount"{...field}
+                                    // onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                        )}
+                    />
+
+
                     <Button
                         type="submit"
                         disabled={isPending}
