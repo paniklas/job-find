@@ -68,7 +68,7 @@ export async function createJob(formData) {
         await connectToDatabase();
 
         // Generate a slug from the title
-        const slug = slugify(title, { lower: true });
+        const slug = slugify(description, { lower: true });
 
         // Find the category by name to get its ObjectId
         const categoryDoc = await Categories.findOne({ name: category });

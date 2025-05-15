@@ -38,3 +38,21 @@ export const getJobs = async () => {
         throw new Error("Failed to fetch jobs", error);
     }
 };
+
+// Get job by slug
+export const getJobBySlug = async (slug) => {
+    try {
+        await connectToDatabase();
+        const job = await Jobs.findOne({ slug }).lean();
+
+        if (!job) {null}
+
+        return {
+            job,
+        }
+
+    } catch (error) {
+        console.error('Error fetching job by slug', error);
+        throw new Error("Failed to fetch job", error);
+    }
+};

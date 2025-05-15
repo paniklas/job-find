@@ -15,6 +15,7 @@ import {
   } from '@/components/ui/alert-dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { deleteJob } from "@/actions/deleteJob";
+import Link from "next/link";
 
 
 const JobList = ({ jobs }) => {
@@ -44,7 +45,7 @@ const JobList = ({ jobs }) => {
             setIsDeleting(false);
             setDeletingJobId(null);
         }
-      };
+    };
   
     return (
         <>
@@ -52,6 +53,7 @@ const JobList = ({ jobs }) => {
                 <TableHeader>
                     <TableRow>
                     <TableHead>Title</TableHead>
+                    <TableHead>Slug</TableHead>
                     <TableHead>Description</TableHead>
                     <TableHead>Category</TableHead>
                     <TableHead>Company</TableHead>
@@ -65,6 +67,7 @@ const JobList = ({ jobs }) => {
                     {jobs.jobs.map((job) => (
                         <TableRow key={job._id}>
                             <TableCell>{job.title}</TableCell>
+                            <TableCell>{job.slug}</TableCell>
                             <TableCell>{job.description}</TableCell>
                             <TableCell>
                                 {job.categories?.map(category => category.name).join(", ") || "No category"}
@@ -74,6 +77,14 @@ const JobList = ({ jobs }) => {
                             <TableCell>{job.salary ? `$${job.salary}` : "Not specified"}</TableCell>
                             <TableCell>{job.jobType}</TableCell>
                             <TableCell>
+                                <Link href={`/job/${job.slug}`} className="mr-2">
+                                    <Button
+                                        variant="outline"
+                                        className="mr-2"
+                                    >
+                                        View
+                                    </Button>
+                                </Link>
                                 <Button
                                     variant="outline"
                                     className="mr-2"

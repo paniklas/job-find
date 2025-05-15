@@ -33,7 +33,7 @@ const jobsSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: false
+        required: true
     },
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
