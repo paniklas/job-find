@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import { Dialog } from "@/components/ui/dialog";
 import CategoryList from "@/components/users/admin/CategoryList";

@@ -62,13 +62,32 @@ import slugify from 'slugify';
 export async function createJob(formData) {
     console.log("Form data Job Form", formData);
 
-    const { title, description, category, jobType, company, location, salary } = Object.fromEntries(formData);
-
     try {
         await connectToDatabase();
 
+         // Extract all form fields
+         const title = formData.get("title");
+         const description = formData.get("description");
+         const category = formData.get("category");
+         const jobType = formData.get("jobType");
+         const company = formData.get("company");
+         const location = formData.get("location");
+         const salary = formData.get("salary");
+         const requirementsJSON = formData.get("requirements");
+ 
+         // Parse requirements from JSON string
+         let requirements = [];
+         if (requirementsJSON) {
+             try {
+                 requirements = JSON.parse(requirementsJSON);
+             } catch (error) {
+                 console.error("Error parsing requirements:", error);
+                 requirements = [];
+             }
+         }
+
         // Generate a slug from the title
-        const slug = slugify(description, { lower: true });
+        const slug = slugify(title, { lower: true });
 
         // Find the category by name to get its ObjectId
         const categoryDoc = await Categories.findOne({ name: category });
@@ -82,13 +101,12 @@ export async function createJob(formData) {
             slug,
             description,
             categories: [categoryDoc._id],
-            jobType,      // Added this field
-            company,      // Added this field
-            location,     // Added this field
-            salary,       // Added this field
+            jobType,
+            company,
+            location,
+            salary,
+            requirements
         });
-
-        console.log("New job", newJob);
 
         const savedJob = await newJob.save();
         const verifiedJob = await Jobs.findById(savedJob._id);

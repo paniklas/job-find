@@ -15,17 +15,11 @@ import { getJobBySlug } from "@/utils/getData";
 
 export default async function JobPage({ params }) {
 
-    console.log("Job page params:", await params)
-
     const { slug } = await params;
-    console.log("Job slug:", slug);
-
-    // Fetch job details using the slug
     const jobData = await getJobBySlug(slug);
-    console.log("Job details:", jobData);
-
     const job = jobData?.job;
-    console.log("Job:", job);
+
+    console.log("Job", job);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -65,7 +59,6 @@ export default async function JobPage({ params }) {
           </div>
           <Button size="lg">Apply Now</Button>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
             <CardContent className="p-4 flex items-center gap-3">
@@ -123,14 +116,13 @@ export default async function JobPage({ params }) {
 
               <div>
                 <h2 className="text-xl font-semibold mb-3">Requirements</h2>
-                <ul className="list-disc pl-5 space-y-2 text-gray-700">
-                  <li>5+ years of experience in frontend development</li>
-                  <li>Strong proficiency in JavaScript, HTML, and CSS</li>
-                  <li>Experience with React and Next.js</li>
-                  <li>Understanding of responsive design principles</li>
-                  <li>Experience with version control systems (Git)</li>
-                  <li>Excellent problem-solving skills and attention to detail</li>
-                </ul>
+                {job.requirements && job.requirements.length > 0 && (
+                    <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                        {job.requirements.map((requirement, index) => (
+                            <li key={index}>{requirement}</li>
+                        ))}
+                    </ul>
+                )}
               </div>
 
               <Separator />

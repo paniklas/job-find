@@ -56,18 +56,10 @@ const jobsSchema = new mongoose.Schema({
         type: Number,
         required: false
     },
-    // companyLogo: {
-    //     type: String,
-    //     required: true
-    // },
-    // postedDate: {
-    //     type: Date,
-    //     required: true
-    // },
-    // expirationDate: {
-    //     type: Date,
-    //     required: true
-    // },
+    requirements: [{
+        type: String,
+        required: false
+    }],
 }, {
     timestamps: true, toJSON: { virtuals: true },
     toObject: { virtuals: true } 

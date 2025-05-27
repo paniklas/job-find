@@ -47,6 +47,11 @@ export const getJobBySlug = async (slug) => {
 
         if (!job) {null}
 
+        // Ensure requirements array exists
+        if (!job.requirements) {
+            job.requirements = [];
+        }
+
         return {
             job,
         }

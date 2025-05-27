@@ -17,6 +17,7 @@ import {
     SelectValue,
   } from "@/components/ui/select";
 import { createJob } from "@/actions/createJob";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
     title: z.string().min(2, {
@@ -45,6 +46,7 @@ export default function JobForm({ initialCategories }) {
             company: "",
             location: "",
             salary: "",
+            requirements: "",
         },
     })
 
@@ -61,6 +63,11 @@ async function onSubmit() {
         formData.append("company", values.company);
         formData.append("location", values.location);
         formData.append("salary", values.salary);
+        
+        const requirementsArray = values.requirements
+            ? values.requirements.split('\n').map(req => req.trim()).filter(req => req !== '')
+            : [];
+        formData.append("requirements", JSON.stringify(requirementsArray));
 
         try {
             const result = await createJob(formData);
@@ -189,6 +196,28 @@ async function onSubmit() {
                                     <Input placeholder="Enter company name" {...field} />
                                 </FormControl>
                                 <FormDescription>For multiple companies, separate with commas</FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Requirements */}
+                    <FormField
+                        control={form.control}
+                        name="requirements"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Job Requirements</FormLabel>
+                                <FormControl>
+                                    <Textarea
+                                        placeholder="Enter each requirement on a new line&#10;Example:&#10;5+ years of experience&#10;Strong JavaScript skills&#10;Bachelor's degree required"
+                                        className="min-h-[120px]"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                    Enter each requirement on a separate line. They will be displayed as bullet points.
+                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}

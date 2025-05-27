@@ -53,8 +53,6 @@ const JobList = ({ jobs }) => {
                 <TableHeader>
                     <TableRow>
                     <TableHead>Title</TableHead>
-                    <TableHead>Slug</TableHead>
-                    <TableHead>Description</TableHead>
                     <TableHead>Category</TableHead>
                     <TableHead>Company</TableHead>
                     <TableHead>Location</TableHead>
@@ -67,8 +65,6 @@ const JobList = ({ jobs }) => {
                     {jobs.jobs.map((job) => (
                         <TableRow key={job._id}>
                             <TableCell>{job.title}</TableCell>
-                            <TableCell>{job.slug}</TableCell>
-                            <TableCell>{job.description}</TableCell>
                             <TableCell>
                                 {job.categories?.map(category => category.name).join(", ") || "No category"}
                             </TableCell>
