@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -57,7 +58,12 @@ export default async function JobPage({ params }) {
               </div>
             </div>
           </div>
-          <Button size="lg">Apply Now</Button>
+          <div className="flex items-center gap-2">
+            <Link href="/dashboard/admin">
+            <Button size="lg">Back</Button>
+            </Link>
+            <Button size="lg" className="bg-blue-600 text-white hover:bg-blue-700">Apply Now</Button>
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
@@ -105,10 +111,7 @@ export default async function JobPage({ params }) {
               <div>
                 <h2 className="text-xl font-semibold mb-3">Job Description</h2>
                 <p className="text-gray-700 leading-relaxed">
-                  We are looking for a Senior Frontend Developer to join our growing team. You will be responsible for
-                  building and maintaining user interfaces for our web applications. The ideal candidate has strong
-                  experience with modern JavaScript frameworks, particularly React, and a passion for creating intuitive
-                  user experiences.
+                  {job.description || "No description available for this job."}
                 </p>
               </div>
 
@@ -173,9 +176,7 @@ export default async function JobPage({ params }) {
         </Card>
 
         <div className="flex justify-center">
-          <Button size="lg" className="w-full sm:w-auto">
-            Apply Now
-          </Button>
+          <Button size="lg" className="bg-blue-600 text-white hover:bg-blue-700 w-full sm:w-auto">Apply Now</Button>
         </div>
       </div>
     </div>
